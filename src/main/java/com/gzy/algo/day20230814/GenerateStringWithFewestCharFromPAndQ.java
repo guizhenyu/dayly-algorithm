@@ -13,8 +13,6 @@ public class GenerateStringWithFewestCharFromPAndQ {
         Map<Integer, Integer> map = new HashMap<>();
 
         return violentRecursive(pChars, qChars, 0, map);
-
-
     }
 
     private static int violentRecursive(char[] pChars, char[] qChars, int index, Map<Integer, Integer> map) {
@@ -95,17 +93,21 @@ public class GenerateStringWithFewestCharFromPAndQ {
             // 这边比较的是当P[i] 和Q[i]的词频相等，并且大于1时的, 取间隔较远的那个字符
             // 例如： P = "axxz" Q="yzwy"   当i = 3时， P[3] = 'z', Q[3]='y', 他们得词频都是2， 这时由于z的下一次出现的位置是1， 而y下一次出现的位置是0， 所以选择y
             if (pNumCount == qNumCount && pNumCount > 1){
-                int nextPIndex = stackP.isEmpty()? (positionMapQ.get(pNum).isEmpty()? 0:  positionMapQ.get(pNum).peek()) : stackP.peek();
-                int nextQIndex = stackQ.isEmpty()? (positionMapP.get(qNum).isEmpty()? 0 : positionMapP.get(qNum).peek()):stackQ.peek();
+                int nextPIndex = stackP.isEmpty()? (positionMapQ.get(pNum) == null ||positionMapQ.get(pNum).isEmpty() ? 0:  positionMapQ.get(pNum).peek()) : stackP.peek();
+                int nextQIndex = stackQ.isEmpty()? (positionMapP.get(qNum) == null || positionMapP.get(qNum).isEmpty()? 0 : positionMapP.get(qNum).peek()): stackQ.peek();
 
                 // 这边只考虑 Q[i] 在 P[i]前面， 因为默认是取的P[i]
                 if (nextPIndex > nextQIndex){
                     resMap.put(qNum, 1);
+                    cacheMap.put(qNum, cacheMap.get(qNum) - 1);
+                    cacheMap.put(pNum, cacheMap.get(pNum) - 1);
                     continue;
                 }
             }
             // 之前已经放到结果集里面了
             if (resMap.containsKey(pNum) || resMap.containsKey(qNum)){
+                cacheMap.put(qNum, cacheMap.get(qNum) - 1);
+                cacheMap.put(pNum, cacheMap.get(pNum) - 1);
                 continue;
             }
 
@@ -115,7 +117,7 @@ public class GenerateStringWithFewestCharFromPAndQ {
                     resMap.put(pNum, 1);
                 }
                if (pNumCount > 1){
-                   cacheMap.put(pNum, pNumCount - 1);
+
                }else {
                    if (!resMap.containsKey(pNum)){
                        resMap.put(pNum, 1);
@@ -126,13 +128,15 @@ public class GenerateStringWithFewestCharFromPAndQ {
                     resMap.put(qNum, 1);
                 }
                 if (qNumCount > 1){
-                    cacheMap.put(qNum, qNumCount - 1);
+
                 }else {
                     if (!resMap.containsKey(qNum)){
                         resMap.put(qNum, 1);
                     }
                 }
             }
+            cacheMap.put(qNum, cacheMap.get(qNum) - 1);
+            cacheMap.put(pNum, cacheMap.get(pNum) - 1);
         }
 
 
@@ -148,17 +152,44 @@ public class GenerateStringWithFewestCharFromPAndQ {
     public static void main(String[] args) {
         String P = "abc";
         String Q = "abc";
+        int testTime = 10000;
+        int N = 20;
+        char[] chars = {'a', 'b', 'c','d', 'e', 'f','g', 'h', 'i','j', 'k', 'l','m', 'n', 'o','p', 'q', 'r','s', 't', 'u','v', 'w', 'x','y', 'z'};
+        for (int i = 0; i < testTime; i++){
+            int len = (int)(Math.random() * N) + 1;
+            StringBuffer sbP = new StringBuffer();
+            StringBuffer sbQ = new StringBuffer();
+            for (int j = 0; j < len; j++){
+                int pIndex = (int)(Math.random() * 26);
+                sbP.append(chars[pIndex]);
+                int qIndex = (int)(Math.random() * 26);
+                sbQ.append(chars[qIndex]);
+            }
 
+            P = sbP.toString();
+            Q = sbQ.toString();
+            int pAns = solution1(P, Q);
+            int qAns = solution(P, Q);
+            if (pAns != qAns){
+                System.out.println(P.toString());
+                System.out.println(Q.toString());
+                System.out.println(pAns);
+                System.out.println(qAns);
+            }
+        }
 
+//fdozgkvnhng
+        // gfauppvutdp
 
-        int i = solution1(P, Q);
-        int ans = solution(P, Q);
-        System.out.println(i);
-        System.out.println(ans);
 
     }
 
+    public static void main1(String[] args) {
+        String p = "fdozgkvnhng";
+        String q = "gfauppvutdp";
 
+        System.out.println(solution1(p, q));
+    }
 
 
 }
