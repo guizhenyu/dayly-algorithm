@@ -6,6 +6,39 @@ import java.util.Map;
 import java.util.Stack;
 
 public class GenerateStringWithFewestCharFromPAndQ {
+    public static int solution(String P, String Q) {
+        // Implement your solution here
+        char[] pChars = P.toCharArray();
+        char[] qChars = Q.toCharArray();
+        Map<Integer, Integer> map = new HashMap<>();
+
+        return violentRecursive(pChars, qChars, 0, map);
+
+
+    }
+
+    private static int violentRecursive(char[] pChars, char[] qChars, int index, Map<Integer, Integer> map) {
+        if (index ==  pChars.length){
+            return map.size();
+        }
+        Integer pInt = (int)pChars[index];
+        map.put(pInt, map.getOrDefault(pInt, 0) + 1);
+        int p1 = violentRecursive(pChars, qChars, index + 1, map);
+        map.put(pInt, map.getOrDefault(pInt, 0)  - 1);
+        if (map.get(pInt) == 0){
+            map.remove(pInt);
+        }
+
+        pInt = (int)qChars[index];
+        map.put(pInt, map.getOrDefault(pInt, 0) + 1);
+        int p2 = violentRecursive(pChars, qChars, index + 1, map);
+        map.put(pInt, map.getOrDefault(pInt, 0)  - 1);
+        if (map.get(pInt) == 0){
+            map.remove(pInt);
+        }
+        return Math.min(p1, p2);
+    }
+
 
     public  static int solution1(String P, String Q) {
         // Implement your solution here
@@ -117,8 +150,11 @@ public class GenerateStringWithFewestCharFromPAndQ {
         String Q = "abc";
 
 
+
         int i = solution1(P, Q);
+        int ans = solution(P, Q);
         System.out.println(i);
+        System.out.println(ans);
 
     }
 
