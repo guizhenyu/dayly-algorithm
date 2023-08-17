@@ -91,10 +91,10 @@ public class GenerateStringWithFewestCharFromPAndQ {
             stackQ.pop();
 
             // 这边比较的是当P[i] 和Q[i]的词频相等，并且大于1时的, 取间隔较远的那个字符
-            // 例如： P = "axxz" Q="yzwy"   当i = 3时， P[3] = 'z', Q[3]='y', 他们得词频都是2， 这时由于z的下一次出现的位置是1， 而y下一次出现的位置是0， 所以选择y
+            // 例如： P = "axxz" Q="yzwy"   当i = 3时， P[3] = 'z', Q[3]='y', 他们得词频都是2， 这时由于z的下一次出现的位置是 1， 而y下一次出现的位置是0， 所以选择y
             if (pNumCount == qNumCount && pNumCount > 1){
-                int nextPIndex = stackP.isEmpty()? (positionMapQ.get(pNum) == null ||positionMapQ.get(pNum).isEmpty() ? 0:  positionMapQ.get(pNum).peek()) : stackP.peek();
-                int nextQIndex = stackQ.isEmpty()? (positionMapP.get(qNum) == null || positionMapP.get(qNum).isEmpty()? 0 : positionMapP.get(qNum).peek()): stackQ.peek();
+                int nextPIndex = stackP.isEmpty()? i : stackP.peek();
+                int nextQIndex = stackQ.isEmpty()? i: stackQ.peek();
 
                 // 这边只考虑 Q[i] 在 P[i]前面， 因为默认是取的P[i]
                 if (nextPIndex > nextQIndex){
