@@ -1,4 +1,4 @@
-package com.gzy.algo.day20230816.medium;
+package com.gzy.algo.day20230817.medium;
 
 public class removeDuplicatesFromSortedArrayLi {
 
@@ -34,10 +34,29 @@ public class removeDuplicatesFromSortedArrayLi {
         return ans;
     }
 
+    public int removeDuplicates1(int[] nums) {
+        if (nums.length <= 2){
+            return 2;
+        }
+
+        int ans = 2;
+        int index = 2;
+
+        while (index < nums.length){
+            if (nums[index] == nums[ans - 2]){
+                index++;
+            }else {
+                nums[ans++] = nums[index++];
+            }
+        }
+        return ans;
+    }
+
+
     public static void main(String[] args) {
         removeDuplicatesFromSortedArrayLi function = new removeDuplicatesFromSortedArrayLi();
         int[] ints = {1, 1, 1, 2, 2, 3};
-        int ans = function.removeDuplicates(ints);
+        int ans = function.removeDuplicates1(ints);
         System.out.println(ans);
     }
 
