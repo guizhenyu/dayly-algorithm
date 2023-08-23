@@ -17,8 +17,23 @@ public class BestTimeToBuyAndSellStockIII {
      * @return
      */
     public int maxProfit(int[] prices){
-        
+        int len = prices.length;
 
-        return 0;
+        int[][][] dp = new int[len - 1][2][3];
+        dp[0][1][1] = -prices[0];
+
+        for (int i = 1; i <= 2; i++){
+            for (int j = 1; j < len; j++){
+                dp[j][0][i] = Math.max(dp[j - 1][0][i], dp[j - 1][1][i] + prices[j]);
+                dp[j][1][i] = Math.max(dp[j - 1][0][i] - prices[j], dp[j - 1][1][i]);
+            }
+        }
+
+        return Math.max(Math.max(dp[len - 1][0][0], dp[len - 1][0][1]), dp[len - 1][0][2]);
     }
+
+//    public int natureWisdom(int[] prices, int index, int limit, int profit){
+//
+//
+//    }
 }

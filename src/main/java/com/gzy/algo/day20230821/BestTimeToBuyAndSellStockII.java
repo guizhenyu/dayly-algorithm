@@ -56,4 +56,23 @@ public class BestTimeToBuyAndSellStockII {
         }
         return dp[len - 1][0];
     }
+
+    public int greedyAlgorithm(int[] prices){
+        // because the time of buy or sell is unlimited,
+        // and only the selling price is higher than the buying price that can create profit.
+        // so we just calculate and plus all the possibilities that the price[i] is larger than price[i - 1]
+
+        // the variable ans represents the return answer.
+        int ans = 0;
+
+        for (int i = 1; i< prices.length; i++){
+            if (prices[i] > prices[i - 1]){
+                ans += prices[i] - prices[i - 1];
+            }
+        }
+
+
+
+        return ans;
+    }
 }
