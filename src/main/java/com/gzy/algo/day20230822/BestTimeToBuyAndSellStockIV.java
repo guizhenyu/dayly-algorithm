@@ -42,18 +42,18 @@ public class BestTimeToBuyAndSellStockIV {
         // with at most j transactions.
         // dp[i][j] = Math.max (
         //                      dp[i - 1][j],
-        //                      dp[i - 1][j - 1] + prices[i] - prices[i],
-        //                      dp[i - 2][j - 1] + prices[i] - prices[i - 1]
-        //                      dp[i - 3][j - 1] + prices[i] - prices[i - 2]
+        //                      dp[i - 1][j - 1] + prices[i] - prices[i - 1],
+        //                      dp[i - 2][j - 1] + prices[i] - prices[i - 2]
+        //                      dp[i - 3][j - 1] + prices[i] - prices[i - 3]
         //                                         ...
-        //                      dp[1][j - 1] + prices[i] - prices[0]
+        //                      dp[0][j - 1] + prices[i] - prices[0]
         //                      )
         //           = Math.max (
         //                      dp[i - 1][j],
         //                      Math.max(
-        //                              dp[i - 1][j - 1] - prices[i],
-        //                              dp[i - 2][j - 1] - prices[i - 1]
-        //                              dp[i - 3][j - 1] - prices[i - 2]
+        //                              dp[i - 1][j - 1] - prices[i - 1],
+        //                              dp[i - 2][j - 1] - prices[i - 2]
+        //                              dp[i - 3][j - 1] - prices[i - 3]
         //                                                 ...
         //                              dp[1][j - 1] - prices[0]
         //
