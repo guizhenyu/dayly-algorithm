@@ -54,6 +54,50 @@ public class BestTImeToBuyAndSellStockWithCoolDown {
 
             return Math.max(p3, p4);
         }
+    }
 
+    public int dynamicProgram(int[] prices){
+        if (prices == null || prices.length < 2){
+            return 0;
+        }
+
+        int N = prices.length;
+        int buy1 = Math.max(-prices[0], -prices[1]);
+        int sell1 = Math.max(0, -prices[0] + prices[1]);
+        int sell0 = 0;
+        for (int i = 2; i < N; i++){
+            int temp = sell1;
+            sell1 = Math.max(sell1, buy1 + prices[i]);
+            buy1 = Math.max(buy1, sell0 - prices[i]);
+            sell0 = temp;
+        }
+
+        return sell1;
+    }
+
+
+    public int dynamicProgram1(int[] prices){
+        if (prices == null || prices.length < 2){
+            return 0;
+        }
+
+        int N = prices.length;
+        int[] buys = new int[N];
+        int[] sells = new int[N];
+
+        buys[0] = -prices[0];
+        sells[0] = 0;
+
+        buys[1] = Math.max(buys[0], -prices[1]);
+        sells[1] = Math.max(sells[0], buys[0] + prices[1]);
+        for (int i = 2; i < N; i++){
+            buys[i] = Math.max(buys[i - 1], sells[i - 2] - prices[i]);
+            sells[i] = Math.max(sells[i - 1], buys[i - 1] + prices[i]);
+
+        }
+
+
+
+        return sells[N - 1];
     }
 }
