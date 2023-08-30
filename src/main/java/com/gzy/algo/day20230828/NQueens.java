@@ -19,8 +19,12 @@ public class NQueens {
 
         List<List<String>> ans = new ArrayList<>();
         int mask = 0;
+        int baseMask = 1;
+        for (int i = 1; i < n; i++){
+            baseMask |= 1 << i;
+        }
 
-        process(n, 0, ans, null, mask, 0, 0);
+        process1(baseMask, n, ans, null, 0, 0, 0);
         return ans;
     }
 
@@ -63,10 +67,40 @@ public class NQueens {
     }
 
 
+    public static void process1(int baseMask,int n,  List<List<String>> ans, List<String> p, int colMask, int leftMask, int rightMask) {
+
+        if (baseMask == colMask){
+            ans.add(p);
+            return;
+        }
+
+        int position = baseMask & (~(colMask | leftMask | rightMask));
+
+        int mostRightPosition = 0;
+
+        while (position > 0){
+            mostRightPosition = position & (~position + 1);
+            List<String> newP = new ArrayList<>();
+            if (p != null) {
+                newP.addAll(p);
+            }
+
+            position -= mostRightPosition;
+            newP.add(packageChess(mostRightPosition, n));
+            process1(baseMask, n, ans, newP, colMask | mostRightPosition, (leftMask | mostRightPosition) << 1, (rightMask | mostRightPosition) >> 1);
+
+        }
+
+
+    }
+    
+
     public static String packageChess(int index, int n) {
+
+
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < n; i++) {
-            if (i == index) {
+            if ( (1 << i) == index) {
                 sb.append("Q");
             } else {
                 sb.append(".");
