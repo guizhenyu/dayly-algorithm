@@ -1,6 +1,6 @@
 package com.gzy.algo.month202309;
 
-public class SeptemberFirstMaximumSubarray {
+public class September1MaximumSubarray {
 
     /**
      * Given an integer array nums, find the subarray with the largest sum, and return its sum.
