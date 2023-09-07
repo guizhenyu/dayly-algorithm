@@ -26,12 +26,31 @@ public class SerializableTest {
 //        }
 
         // 从文件中读出对象
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("user.txt")))){
-            User userRead = (User) ois.readObject();
-            System.out.println(userRead);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("user.txt")))){
+//            User userRead = (User) ois.readObject();
+//            System.out.println(userRead);
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+        Thread thread = new Thread(() -> {
+            while (true){
+                try {
+                    Thread.sleep(10000);
+                    System.out.println("i'm sleeping ");
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+        System.out.println("end");
     }
 
     public static class User implements Serializable{
