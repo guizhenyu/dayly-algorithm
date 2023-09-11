@@ -60,6 +60,29 @@ public class September11CoinChange {
 
     }
 
+    public int coinChangeDpOptimize(int[] coins, int amount) {
+        int len = coins.length;
+        int maxVal = amount + 1;
+        int[] dp = new int[amount + 1];
+
+        Arrays.fill(dp, maxVal);
+
+        dp[0] = 0;
+
+        for (int i = 1; i <= amount; i++){
+            for (int j = len - 1; j >= 0; j--){
+                if (i >= coins[j]){
+                    dp[i] = Math.min(dp[i],
+                            dp[i - coins[j]] == maxVal? maxVal : dp[i - coins[j]] + 1);
+                }
+
+
+            }
+        }
+
+        return dp[amount] == maxVal? -1 : dp[amount];
+    }
+
     private int process(int[] coins, int amount, int index) {
         if (amount == 0){
             return 0;
