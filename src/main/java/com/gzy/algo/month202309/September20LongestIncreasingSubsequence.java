@@ -12,19 +12,19 @@ public class September20LongestIncreasingSubsequence {
      * @return
      */
     public int lengthOfLIS(int[] nums){
-        return process(nums, 1, 0,1);
+        return process(nums, 1, 0);
     }
 
-    public int process(int[] nums, int index, int preIndex, int len){
+    public int process(int[] nums, int index, int preIndex){
         if (index == nums.length){
-            return len;
+            return 1;
         }
 
-        int ans = process(nums, index + 1, preIndex, len);
+        int ans = process(nums, index + 1, preIndex);
         if (nums[index] > nums[preIndex]){
-            ans = Math.max(ans,process(nums, index + 1, index, ++len));
+            ans = Math.max(ans, process(nums, index + 1, index) + 1);
         }else {
-            ans = Math.max(ans, process(nums, index + 1, index, 1));
+            ans = Math.max(ans, process(nums, index + 1, index));
         }
 
         return ans;
