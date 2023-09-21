@@ -50,6 +50,38 @@ public class September21LongestIncreasingSubsequence {
         }
 
         return maxAns;
+    }
+
+    public int greedAndDichotomy(int[] nums){
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+
+        int N = nums.length;
+        int[] dp = new int[N + 1];
+        int len = 1;
+        dp[len] = nums[0];
+
+        for (int i = 1; i < N; i++){
+            if (nums[i] > dp[len]){
+                dp[++len] = nums[i];
+            }else {
+                int l = 1, r = len, mid = 0, position = 0;
+                // because the dp array is monotone increasing.(单调递增)
+                while (l <= r){
+                    mid = (l + r) >> 1;
+                    if (dp[mid] >= nums[i]){
+                        r = mid - 1;
+                    }else {
+                        position = mid;
+                        l = mid + 1;
+                    }
+                }
+                dp[position + 1] = nums[i];
+            }
+        }
+
+        return len;
 
     }
 }
