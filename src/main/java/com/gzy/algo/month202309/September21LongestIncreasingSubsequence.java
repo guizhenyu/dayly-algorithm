@@ -1,6 +1,6 @@
 package com.gzy.algo.month202309;
 
-public class September20LongestIncreasingSubsequence {
+public class September21LongestIncreasingSubsequence {
 
 
     /**
@@ -29,5 +29,27 @@ public class September20LongestIncreasingSubsequence {
         }
 
         return ans;
+    }
+
+    public int dp(int[] nums){
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        int N = nums.length;
+        int[] dp = new int[N];
+        dp[0] = 1;
+        int  maxAns = 1;
+        for (int i = 1; i < N; i++){
+            dp[i] = 1;
+            for (int j = 0; j < i; j++){
+                if (nums[i] > nums[j]){
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            maxAns = Math.max(maxAns, dp[i]);
+        }
+
+        return maxAns;
+
     }
 }
