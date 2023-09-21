@@ -56,12 +56,10 @@ public class September21LongestIncreasingSubsequence {
         if (nums == null || nums.length == 0){
             return 0;
         }
-
         int N = nums.length;
         int[] dp = new int[N + 1];
         int len = 1;
         dp[len] = nums[0];
-
         for (int i = 1; i < N; i++){
             if (nums[i] > dp[len]){
                 dp[++len] = nums[i];
@@ -80,8 +78,6 @@ public class September21LongestIncreasingSubsequence {
                 dp[position + 1] = nums[i];
             }
         }
-
         return len;
-
     }
 }
