@@ -1,6 +1,6 @@
 package com.gzy.algo.month202309;
 
-public class September21MaximumProductSubarray {
+public class September22MaximumProductSubarray {
 
     /**
      * Given an integer array nums, find a subarray that has the largest product(multiply), and return the product.
@@ -39,15 +39,23 @@ public class September21MaximumProductSubarray {
             return 0;
         }
 
+
         int N = nums.length;
-        int[] dp = new int[N];
-        dp[N - 1] = nums[N - 1];
-        for (int i = N - 2; i >= 0; i--){
+        int[] maxDp = new int[N];
+        int[] minDp = new int[N];
+        maxDp[0] = nums[0];
+        minDp[0] = nums[0];
+        int maxAns = nums[0];
 
+        for (int i = 1; i < N; i++){
+            int num1 = nums[i] * maxDp[i - 1];
+            int num2 = nums[i] * minDp[i - 1];
+            maxDp[i] = Math.max(nums[i], Math.max(num1, num2));
+            minDp[i] = Math.min(nums[i], Math.min(num1, num2));
 
-
+            maxAns = Math.max(maxDp[i], maxAns);
         }
 
-        return dp[0];
+        return maxAns;
     }
 }
