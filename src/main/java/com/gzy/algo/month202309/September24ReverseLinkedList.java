@@ -17,6 +17,9 @@ public class September24ReverseLinkedList {
         return process(head, null);
     }
 
+
+
+
     private ListNode process(ListNode node, ListNode pre) {
 
         if (node == null){
