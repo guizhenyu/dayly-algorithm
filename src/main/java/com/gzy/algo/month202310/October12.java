@@ -74,23 +74,17 @@ public class October12 {
             sum += num;
             max = Math.max(max, num);
         }
-
-
         if(sum % 2 != 0){
             return false;
         }
-
         int half = sum / 2;
-
         if (max > half){
             return false;
         }
         int n = nums.length;
-
 //        boolean[][] dp = new boolean[n + 1][half + 1];
         boolean[] dp = new boolean[half + 1];
         dp[half] = true;
-
         for (int i = n - 1; i >= 0; i--){
             for (int j = half - 1; j >= 0; j--){
 
