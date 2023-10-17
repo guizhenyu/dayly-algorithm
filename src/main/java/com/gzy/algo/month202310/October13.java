@@ -1,5 +1,8 @@
 package com.gzy.algo.month202310;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class October13 {
 
     /**
@@ -32,8 +35,25 @@ public class October13 {
 
     }
 
-    public int process(String s, int index, int ans){
+    public int longestValidParenthesesByStack(String s){
+        int maxAns = 0;
+        Deque<Integer> stack = new LinkedList<Integer>();
+        stack.push(-1);
+        for (int i = 0; i < s.length(); i++){
+
+            if (s.charAt('i') == '('){
+                stack.push(i);
+            }else {
+                stack.pop();
+                if (stack.isEmpty()){
+                    stack.push(i);
+                }else {
+                    maxAns = Math.max(maxAns, i - stack.peek());
+                }
 
 
+            }
+        }
+        return maxAns;
     }
 }
