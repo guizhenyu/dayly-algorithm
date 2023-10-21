@@ -2,7 +2,7 @@ package com.gzy.algo.month202310;
 
 import java.util.Stack;
 
-public class OctoberTrappingRainWater {
+public class October18TrappingRainWater {
 
     /**
      * Given an non-negative integers representing an elevation map where the width of each bar is 1,
