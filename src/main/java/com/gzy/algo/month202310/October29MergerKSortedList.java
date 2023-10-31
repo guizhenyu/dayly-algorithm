@@ -11,7 +11,7 @@ public class October29MergerKSortedList {
         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
     public ListNode mergerKSortedList(ListNode[] list){
-        int maxValue =  10^4 + 1;
+        int maxValue =  10001;
         int[] counts = new int[maxValue * 2];
         if (list == null || list.length == 0){
             return null;
@@ -35,5 +35,20 @@ public class October29MergerKSortedList {
             }
         }
         return ans.next;
+
     }
+
+    public final static int num = 10;
+
+    public static void main(String[] args) {
+        October29MergerKSortedList ob = new October29MergerKSortedList();
+//        ob.num = 11;
+
+        System.out.println(10^4 + 1);
+        System.out.println(October29MergerKSortedList.num);
+    }
+
+
+
+
 }
