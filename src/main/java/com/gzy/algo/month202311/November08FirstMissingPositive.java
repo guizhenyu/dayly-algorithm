@@ -24,7 +24,9 @@ public class November08FirstMissingPositive {
         for (int i = 0 ; i < n; i++){
 
             int index = Math.abs(nums[i]);
-            if (index < n && nums[index - 1] > 0){
+            if (index <
+
+                    n && nums[index - 1] > 0){
                 nums[index - 1] = -nums[index - 1];
             }
         }
