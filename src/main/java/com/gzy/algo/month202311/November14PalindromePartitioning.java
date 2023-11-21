@@ -39,6 +39,17 @@ public class November14PalindromePartitioning {
         return ret;
     }
 
+    public void iterateDP(){
+        for (int i = 0; i < n; i++){
+
+            for (int j = i; j < n; j++){
+                if(dp[i][j]){
+
+                }
+            }
+        }
+    }
+
     private void dfs(String s, int i) {
         if (i == n){
             ret.add(new ArrayList<>(ans));
@@ -54,6 +65,18 @@ public class November14PalindromePartitioning {
         }
 
 
+    }
+
+    public static void main(String[] args) {
+        November14PalindromePartitioning fc = new November14PalindromePartitioning();
+
+        List<List<String>> ans = fc.partition("sddfhrhsdfhydiugfhdfojgheiourghlkdsnfiudghfiseurbviujsegioerb");
+        for (List<String> strs : ans){
+            for (String str: strs){
+                System.out.print(str + " ");
+            }
+            System.out.println();
+        }
     }
 
 
