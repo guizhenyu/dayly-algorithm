@@ -4,7 +4,49 @@ public class December13CopyListWithRandomPointer {
 
 
     public Node copyRandomList(Node head) {
-        return null;
+        if(head == null){
+            return null;
+        }
+
+        for (Node next = head; next != null; next = next.next.next){
+            Node node = new Node(next.val);
+            node.next = next.next;
+            node.random = next.random;
+            next.next = node;
+        }
+
+
+        for (Node node = head.next; node != null; node = node.next.next){
+            if(node.random != null){
+                node.random = node.random.next;
+            }
+
+            if(node.next == null){
+                break;
+            }
+        }
+
+        Node newHead = head.next;
+
+
+        for (Node node = head, newNode = newHead; node != null; node = node.next, newNode = newNode.next){
+
+            if (node.next != null){
+                node.next = node.next.next;
+            }
+
+            if (newNode.next != null){
+                newNode.next = newNode.next.next;
+            }
+
+        }
+
+
+        return newHead;
+
+
+
+
     }
 
 
