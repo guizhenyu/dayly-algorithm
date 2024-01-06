@@ -88,9 +88,8 @@ public class December22LRUCache {
         }
 
         public void removeNode(Node node){
-            Node nodePre = node.pre;
-            nodePre.next = node.next;
-            node.next.pre = nodePre;
+            node.next.pre = node.pre;
+            node.pre.next = node.next;
         }
 
         public Node removeTail(){
@@ -100,25 +99,33 @@ public class December22LRUCache {
         }
 
         public void put(int key, int value) {
-
-            if (map.get(key) != null){
-
-                Node node = map.get(key);
+            Node node = map.get(key);
+            if (node != null){
                 node.value = value;
                 removeToHead(node);
-                return;
-            }
-            // 去除最远节点
-            if (count == capacity){
-                Node node = removeTail();
-                map.remove(node.key);
-                --count;
+            }else {
+                //todo 这边有个疑问，当容量已满时，如果我是先删除在添加新的节点时，会出现问题
+                //     而先添加再删除就没有问题
+                // if (count == capacity){
+                //     Node nodeTail = removeTail();
+                //     map.remove(nodeTail.key);
+                //     --count;
+                // }
+                Node newNode = new Node(key, value);
+                addToHead(newNode);
+                map.put(key, newNode);
+                count++;
+
+                // 去除最远节点
+                if (count > capacity){
+                    Node nodeTail = removeTail();
+                    map.remove(nodeTail.key);
+                    --count;
+                }
             }
 
-            Node newNode = new Node(key, value);
-            addToHead(newNode);
-            map.put(key, newNode);
-            count++;
+
+
         }
     }
 
