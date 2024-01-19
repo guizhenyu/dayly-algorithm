@@ -1,10 +1,10 @@
 package com.gzy.algo.month202401;
 
-public class January07SortList {
+public  class January07SortList {
 
 
 
-    public class ListNode {
+    public static class ListNode {
         int val;
         ListNode next;
 
@@ -32,100 +32,119 @@ public class January07SortList {
         /**
          * 采用归并的思想进行排序
          */
-        if(head == null){
-            return head;
-        }
-        ListNode headSentinal = new ListNode(0);
-        headSentinal.next = head;
-        int mergeStep = 1;
-        int len = 1;
-        ListNode next = head.next;
-        while (next != null){
+        int startStep = 1;
+        int len = 0;
+        ListNode nodeTravel = head;
+        while (nodeTravel != null){
             len++;
-            next = next.next;
+            nodeTravel = nodeTravel.next;
         }
-        ListNode pre = null;
-        while (mergeStep < len){
 
-            pre = headSentinal;
-            next = headSentinal.next;
-            while (next != null){
-                ListNode head1 = next;
-
-                for (int i = 1; i < mergeStep && next != null; i++){
-
-                    next = next.next;
-                }
-                ListNode head2 = next.next;
-                if (head2 == null){
-                    break;
-                }
-                next.next = null;
-                next = head2;
-                for (int i = 1; i < mergeStep && next != null; i++){
-                    next = next.next;
-                }
-
-                if (next != null){
-                    ListNode temp = next.next;
-                    next.next = null;
-                    next = temp;
-                }
-
-                pre.next = merge(head1, head2);
-                while (pre.next != null){
-                    pre = pre.next;
-                }
+        ListNode headSentinel = new ListNode(0);
+        headSentinel.next = head;
+        while (startStep < len){
+            ListNode pre = headSentinel;
+            nodeTravel = headSentinel.next;
+            while (nodeTravel != null){
+                // 每次取两个步长的 链表进行合并
+                ListNode firstNode = nodeTravel;
+                ListNode secondNode = cutOffWithLen(firstNode, startStep);
+                ListNode nextNode = cutOffWithLen(secondNode, startStep);
+                ListNode mergeHead = merge(firstNode, secondNode);
+                pre.next = mergeHead;
+                pre = getTail(mergeHead);
+                nodeTravel = nextNode;
             }
 
+            startStep <<= 1;
+        }
 
-            mergeStep = mergeStep << 1;
+        return headSentinel.next;
+
+    }
+
+    private ListNode getTail(ListNode merge) {
+
+        if (merge == null){
+            return null;
+        }
+
+        while (merge.next != null){
+            merge = merge.next;
+        }
+
+        return merge;
+    }
+
+    public ListNode cutOffWithLen(ListNode node, int len){
+        if (node == null){
+            return null;
+        }
+        ListNode nextNode = node;
+        while (len > 1 && nextNode != null){
+            nextNode = nextNode.next;
+            --len;
+        }
+
+        if (nextNode != null){
+            ListNode temp = nextNode.next;
+            nextNode.next = null;
+            nextNode = temp;
+
+        }
+
+        return nextNode;
+    }
+
+    public ListNode merge(ListNode node1, ListNode node2){
+        ListNode headSentinel = new ListNode(0);
+        ListNode pre = headSentinel;
+
+        while (node1 != null && node2 != null){
+
+            if (node1.val < node2.val){
+                pre.next = node1;
+                node1 = node1.next;
+            }else {
+                pre.next = node2;
+                node2 = node2.next;
+            }
+            pre = pre.next;
+
+        }
+
+        if (node1 != null){
+            pre.next = node1;
+        }
+
+        if (node2 != null){
+            pre.next = node2;
         }
 
 
-
-        return headSentinal.next;
+        return headSentinel.next;
     }
 
 
-    public ListNode merge(ListNode node, ListNode node1){
-        ListNode headFlag = new ListNode();
-        ListNode preTail = null;
+    public static void main(String[] args) {
 
-        while (node != null && node1 != null){
-            ListNode lessNode = null;
-            if (node.val > node1.val){
-                lessNode = node1;
-                node1 = node1.next;
-            }else {
-                lessNode = node;
-                node = node.next;
-            }
 
-            if (preTail == null){
-                preTail = lessNode;
-                headFlag.next = lessNode;
-            }else {
-                preTail.next = lessNode;
-            }
+        ListNode listNode1 = new ListNode(4);
 
+
+        ListNode listNode2 = new ListNode(2);
+        listNode1.next = listNode2;
+        ListNode listNode3 = new ListNode(1);
+        listNode2.next = listNode3;
+        ListNode listNode4 = new ListNode(3);
+        listNode3.next = listNode4;
+
+        January07SortList january07SortList = new January07SortList();
+        ListNode listNode = january07SortList.sortList(listNode1);
+        while (listNode != null){
+            System.out.println(listNode.val);
+            listNode = listNode.next;
         }
-
-        while (node != null){
-            preTail.next = node;
-            preTail = node;
-            node = node.next;
-
-        }
-
-
-        while (node1 != null) {
-            preTail.next = node1;
-            preTail = node1;
-            node1 = node1.next;
-        }
-
-        return headFlag.next;
     }
 
 
