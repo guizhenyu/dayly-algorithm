@@ -1,7 +1,9 @@
 package com.gzy.algo.month202403;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class CourseSchedule {
 
@@ -20,6 +22,50 @@ public class CourseSchedule {
     int[] visited;
     boolean valid;
 
+
+    public boolean canFinishWithBFS(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> edges = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++){
+            edges.add(new ArrayList<>());
+        }
+        int[] in = new int[numCourses];
+        for (int[] info : prerequisites){
+            int to = info[0];
+            int from = info[1];
+
+            edges.get(from).add(to);
+            in[to]++;
+        }
+
+
+        int[] zero = new int[numCourses];
+        int l = 0, r = 0;
+        for (int i = 0; i < numCourses; i++){
+            if (in[i] == 0){
+                zero[r++] = i;
+            }
+        }
+        int zeroInCount = 0;
+
+        while (l != r){
+            zeroInCount++;
+            List<Integer> nexts = edges.get(zero[l++]);
+
+            for (Integer next : nexts){
+                if (--in[next] == 0){
+                    zero[r++] = next;
+                }
+            }
+        }
+        return zeroInCount == numCourses;
+    }
+
+
+
+
+
+
+
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         edges = new ArrayList<>();
         visited = new int[numCourses];
@@ -27,7 +73,7 @@ public class CourseSchedule {
             edges.add(new ArrayList<Integer>());
         }
         for (int[] info : prerequisites){
-            edges.get(info[1]).add(info[0]);
+            edges.get(info[0]).add(info[1]);
         }
 
         for (int i = 0; i < numCourses && valid; i++){
@@ -64,4 +110,5 @@ public class CourseSchedule {
             System.out.println(num);
         }
     }
+
 }
